@@ -1,6 +1,5 @@
 # distutils: language = c++
-
-# from libcpp cimport bool
+# distutils: include_dirs = adder
 
 cdef extern from "adder.h":
     int add(int a, int b)
