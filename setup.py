@@ -40,5 +40,4 @@ setup(
         'cython',
     ],
     ext_modules = lazy_list(ext_modules),
-    include_dirs=['adder'],
 )
