@@ -1,3 +1,8 @@
+Cython: An Example
+==================
+
+[![Build Status](https://travis-ci.org/chromy/cython_wrapper_example.svg?branch=master)](https://travis-ci.org/chromy/cython_wrapper_example)
+
 Wrapping a C++ library using Cython in a way that it can be installed and used
 transparently by average Python user in an unnecessarily harrowing and novel
 experience. This example hopefully points out (and helps you avoid) some of the
