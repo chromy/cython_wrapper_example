@@ -35,7 +35,7 @@ def distutils_dir_name(dname):
                     version=sys.version_info)
 
 def get_lib_folder():
-    return os.path.join('build', distutils_dir_name('lib'))
+    return os.path.abspath(os.path.join('build', distutils_dir_name('lib')))
 
 # Build the shared library.
 libadder = Extension('libadder',
@@ -47,18 +47,17 @@ libadder = Extension('libadder',
     # undef_macros=['NDEBUG'],
 )
 
+
+
 def ext_modules():
     from Cython.Build import cythonize
     cython_modules = cythonize('pyadder/*.pyx')
-
-    for m in cython_modules:
-        m.extra_link_args.append('-L'+get_lib_folder())
-
-    return [libadder] + cython_modules
+    print cython_modules[0].sources
+    return cython_modules
 
 if sys.platform == 'darwin':
-    from distutils import sysconfig
-    vars = sysconfig.get_config_vars()
+    from distutils import sysconfig as distsysconfig
+    vars = distsysconfig.get_config_vars()
     vars['LDSHARED'] = vars['LDSHARED'].replace('-bundle', '-dynamiclib')
 
 setup(
