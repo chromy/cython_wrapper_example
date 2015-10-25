@@ -29,7 +29,6 @@ class lazy_list(list):
 def ext_modules():
     from Cython.Build import cythonize
     cython_modules = cythonize('pyadder/*.pyx')
-    print cython_modules[0].sources
     return cython_modules
 
 if sys.platform == 'darwin':
