@@ -1,9 +1,7 @@
 Wrapping a C++ library using Cython in a way that it can be installed and used
 transparently by average Python user in an unnecessarily harrowing and novel
-experience.
-
-This example hopefully points out (and helps you avoid) some of the more
-interesting pitfalls encountered on that path.
+experience. This example hopefully points out (and helps you avoid) some of the
+more interesting pitfalls encountered on that path.
 
 In particular this project shows how to wrap C++/C code that present in your
 source repository, perhaps you wrote it or perhaps because it is an existing
