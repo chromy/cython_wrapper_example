@@ -31,11 +31,6 @@ def ext_modules():
     cython_modules = cythonize('pyadder/*.pyx')
     return cython_modules
 
-if sys.platform == 'darwin':
-    from distutils import sysconfig as distsysconfig
-    vars = distsysconfig.get_config_vars()
-    vars['LDSHARED'] = vars['LDSHARED'].replace('-bundle', '-dynamiclib')
-
 setup(
     name='pyadder',
     packages=[
