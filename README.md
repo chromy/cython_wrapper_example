@@ -13,3 +13,13 @@ because it is an existing library that you plan to copy into your project or
 include as a git submodule. It doesn't show how to wrap a library that a user
 will or has installed separately (say via brew or apt-get) although some parts
 may still be applicable.
+The code
+--------
+
+As an example we'll write a Python wrapper for the following piece of C++:
+
+```cpp
+int add(int a, int b) {
+    return a + b;
+}
+```
