@@ -23,3 +23,11 @@ int add(int a, int b) {
     return a + b;
 }
 ```
+
+Common problems
+---------------
+
+### Error: missing cimport in module 'mypxdfile': mydirectory/mypyxfile.pyx ###
+
+This is a slightly confusing error message is probably due to a
+missing `__init__.py` file under `mydirectory`.
