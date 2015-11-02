@@ -2,7 +2,8 @@ import os
 import sys
 import sysconfig
 platform = sysconfig.get_platform()
-from distutils.core import setup, Extension
+
+from setuptools import setup
 
 # Adapted from http://stackoverflow.com/questions/11010151
 class lazy_list(list):
