@@ -4,33 +4,50 @@ import sysconfig
 platform = sysconfig.get_platform()
 
 from setuptools import setup
+from setuptools.extension import Extension
 
-# Adapted from http://stackoverflow.com/questions/11010151
-class lazy_list(list):
-    def __init__(self, callback):
-        self._list = None
-        self.callback = callback
+import pickle
 
-    @property
-    def list(self):
-        if self._list is None:
-            self._list = self.callback()
-        return self._list
+USE_CYTHON = False
+if '--use-cython' in sys.argv:
+    USE_CYTHON = True
+    sys.argv.remove('--use-cython')
 
-    def __iter__(self):
-        for e in self.list:
-            yield e
+def store(extensions):
+    with open('extensions.pickle', 'w') as f:
+        pickle.dump(extensions, f)
 
-    def __getitem__(self, i):
-        return self.list[i]
+def load():
+    with open('extensions.pickle') as f:
+        return pickle.load(f)
 
-    def __len__(self):
-        return len(self.list)
+def no_cythonize(extensions):
+    for extension in extensions:
+        sources = []
+        for sfile in extension.sources:
+            path, ext = os.path.splitext(sfile)
+            if ext in ('.pyx', '.py'):
+                if extension.language == 'c++':
+                    ext = '.cpp'
+                else:
+                    ext = '.c'
+                sfile = path + ext
+            sources.append(sfile)
+        extension.sources[:] = sources
+    return extensions
 
-def ext_modules():
+def cythonize(*args, **kwargs):
     from Cython.Build import cythonize
-    cython_modules = cythonize('pyadder/*.pyx')
-    return cython_modules
+    return cythonize(*args, **kwargs)
+
+def ext_modules(*args, **kwargs):
+    if USE_CYTHON:
+        extensions = cythonize(*args, **kwargs)
+        store(extensions)
+        return extensions
+    else:
+        extensions = load()
+        return no_cythonize(extensions)
 
 setup(
     name='pyadder',
@@ -40,5 +57,8 @@ setup(
     setup_requires=[
         'cython',
     ],
-    ext_modules = lazy_list(ext_modules),
+    ext_modules = ext_modules([
+        Extension('adder', sources=['pyadder/adder.pyx'], language='c++'),
+    ]),
 )
+

@@ -128,4 +128,5 @@ target/
 
 pyadder/*.c
 pyadder/*.cpp
+*.pickle
 
